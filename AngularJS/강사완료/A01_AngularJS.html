@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>A02 Controller</title>
+<script type="text/javascript" 
+src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
+<script type="text/javascript">
+	function mainCtrl(){
+		this.qty = 3;
+		this.cost = 7;
+		
+		this.total = function(){
+			return this.qty * this.cost;
+		}
+		this.pay = function(){
+			alert('Thank You~');
+		}
+	}
+</script>
+</head>
+<!-- 기존 방식은 함수를 as를 이용해 객체화 해서 사용 -->
+
+<body ng-controller="mainCtrl as mc">
+
+	<h3>Invoice</h3>
+	
+	<div>
+		Quantity: <input type="number" min="0" ng-model="mc.qty">
+	</div>
+	<div>
+		Cost: <input type="number" min="0" ng-model="mc.cost">
+		<select>
+			<option></option>
+		</select>
+	</div>
+	<div>
+		<b>Total: </b>
+		<!-- 바인딩 태그는 연산자 사용 가능. -->
+		<span>{{mc.total()}}</span>
+		<button ng-click="mc.pay()">Pay</button>
+	</div>
+
+</body>
+</html>

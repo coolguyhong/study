@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>A01 ngBind</title>
+</head>
+<body ng-app="app" ng-controller="main">
+
+	<div>{{name}}</div>
+	<!-- 디렉티브에 값을 할당할때는 기본적으로 변수의 이름을 지칭 -->
+	<div ng-bind="name"></div>
+	<div ng-bind="'name'"></div>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+	<script type="text/javascript">
+	    var app = angular.module('app', []);
+	    app.controller('main', ['$scope', function($scope){
+	    	$scope.name = 'HongGilDong';
+	    }]);
+	</script>
+</body>
+</html>

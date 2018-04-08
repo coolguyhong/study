@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>A03 ng-strict-di</title>
+</head>
+<body>
+
+	<div>
+        <div>
+            I can add: 
+
+            <p>This renders because the controller does not fail to
+                instantiate, by using explicit annotation style (see
+                script.js for details)
+            </p>
+        </div>
+
+        <div>
+            Name: <input><br>
+            Hello, 
+            <p>This renders because the controller does not fail to
+                instantiate, by using explicit annotation style
+                (see script.js for details)
+            </p>
+        </div>
+
+        <div>
+            I can add: 
+
+            <p>The controller could not be instantiated, due to relying
+                on automatic function annotations (which are disabled in
+                strict mode). As such, the content of this section is not
+                interpolated, and there should be an error in your web console.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

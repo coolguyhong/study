@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	
+	app.controller('main', ['$scope', function($scope){
+		$scope.friends = [
+	        {name:'John', phone:'010-555-1276', age:10},
+	        {name:'Mary', phone:'02-800-BIG-MARY', age:19},
+	        {name:'Mike', phone:'02-555-4321', age:21},
+	        {name:'Adam', phone:'555-5678', age:35},
+	        {name:'Julie', phone:'555-8765', age:29}                 
+		];
+	}])
+</script>
+</head>
+<body ng-controller="main">
+
+	<div ng-repeat="friend in friends">{{friend.name}}</div>
+	<br>
+	<div ng-repeat="friend in friends">{{friend.name}}</div>
+	<br>
+	<input type="text" ng-model="reg"><br>
+	<div ng-repeat="friend in friends">{{friend.name}}</div>
+
+</body>
+</html>

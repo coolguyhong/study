@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>A04 Form Validation</title>
+<style type="text/css">
+	.error { color: red }
+</style>
+</head>
+<body>
+
+	<div>
+		<form name="myform">
+			Name: <input type="text" placeholder="Name" name="name" ng-minlength=3 ng-maxlength=10 required /><br>
+			<div>
+        		<small class="error">이름은 필수항목입니다.</small>
+        		<small class="error">이름은 3글자 이상입니다.</small>
+        		<small class="error">이름은 10글자 이하입니다.</small>
+      		</div>
+
+			E-Mail: <input type="email" name="email" required><br>
+			<div>
+				<small class="error">E-Mail은 필수항목입니다.</small>
+				<small class="error">E-Mail 형식이 틀립니다</small>
+			</div>
+			
+			URL: <input type="url" name="url" required><br>
+			<div>
+				<small class="error">URL은 필수항목입니다.</small>
+				<small class="error">URL 형식이 틀립니다</small>
+			</div>
+			
+			Number: <input type="number" name="qty" min=0 max=10 required /><br>
+			<div>
+        		<small class="error">수량은 필수항목입니다.</small>
+        		<small class="error">수량은 0개 이상입니다.</small>
+        		<small class="error">수량은 10개 이하입니다.</small>
+        		<small class="error">숫자 형태가 아닙니다</small>
+      		</div>
+      		
+      		TEL: <input type="text" name="tel" required><br>
+			<div>
+        		<small class="error">전화번호는 필수항목입니다.</small>
+        		<small class="error">000-0000-0000 / 00-000-0000</small>
+      		</div>
+
+			<input type="submit" value="Submit">
+			<input type="reset" value="Reset">
+		</form>
+
+		<div>form = </div>
+		
+	</div>
+
+</body>
+</html>

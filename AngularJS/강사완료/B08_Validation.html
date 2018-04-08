@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>A04 Form Validation</title>
+<script type="text/javascript" src="angular-1.3.15/angular.js"></script>
+<script type="text/javascript">
+	var app = angular.module('app', [])
+	app.controller('main', ['$scope',function($scope){
+		$scope.checkName = false;
+		
+		$scope.submitEvemt = function(evt){
+			if($scope.myform.$invalid){
+				// 기존 태그가 가지고 있던 명령을 취소한다.
+				$scope.myform.$submitted = true;
+				evt.preventDefault();
+			}
+			
+		}
+	}]);
+</script>
+<style type="text/css">
+	.error { color: red }
+</style>
+</head>
+<body ng-controller="main">
+
+	<div>
+		<!-- AngularJS는 form을 Javascript과 동일하게 
+			form의 name 값으로 관리를 한다 -->
+		<form name="myform" action="aa.html" novalidate="novalidate"
+			ng-submit="submitEvemt($event)">
+			Name: <input type="text" placeholder="Name" name="name" 
+				ng-minlength=3 ng-maxlength=10 required 
+				ng-model="user.name"/><br>
+				<!-- focus가 된 후에 이동했니? $touched -->
+			<div ng-show="myform.name.$touched || myform.$submitted">
+        		<small class="error" ng-show="myform.name.$error.required">이름은 필수항목입니다.</small>
+        		<small class="error" ng-show="myform.name.$error.minlength">이름은 3글자 이상입니다.</small>
+        		<small class="error" ng-show="myform.name.$error.maxlength">이름은 10글자 이하입니다.</small>
+      		</div>
+
+			E-Mail: <input type="email" name="email" required
+				ng-model="user.email"><br>
+			<div ng-show="myform.email.$touched || myform.$submitted">
+				<small class="error" ng-show="myform.email.$error.required">E-Mail은 필수항목입니다.</small>
+				<small class="error" ng-show="myform.email.$error.email">E-Mail 형식이 틀립니다</small>
+			</div>
+			
+			URL: <input type="url" name="url" required
+				ng-model="user.url"><br>
+			<div ng-show="myform.url.$touched || myform.$submitted">
+				<small class="error" ng-show="myform.url.$error.required">URL은 필수항목입니다.</small>
+				<small class="error" ng-show="myform.url.$error.url">URL 형식이 틀립니다</small>
+			</div>
+			
+			Number: <input type="number" name="qty" min=0 max=10 
+				required ng-model="user.qty"/><br>
+			<div ng-show="myform.qty.$touched || myform.$submitted">
+        		<small class="error" ng-show="myform.qty.$error.required">수량은 필수항목입니다.</small>
+        		<small class="error" ng-show="myform.qty.$error.min">수량은 0개 이상입니다.</small>
+        		<small class="error" ng-show="myform.qty.$error.max">수량은 10개 이하입니다.</small>
+        		<small class="error" ng-show="myform.qty.$error.number">숫자 형태가 아닙니다</small>
+      		</div>
+      		
+      		TEL: <input type="text" name="tel" required
+      				ng-pattern="/^\d{3,4}-\d{3,4}-\d{4}?/"
+      				ng-model="user.tel"><br>
+			<div ng-show="myform.tel.$touched || myform.$submitted">
+        		<small class="error" ng-show="myform.tel.$error.required">전화번호는 필수항목입니다.</small>
+        		<small class="error" ng-show="myform.tel.$error.pattern">000-0000-0000 / 00-000-0000</small>
+      		</div>
+
+			<!-- input type="submit" value="Submit"
+				ng-disabled="myform.$invalid"-->
+			<input type="submit" value="Submit">
+			<input type="reset" value="Reset">
+		</form>
+
+		<div>form = {{myform.name.$error}}</div>
+		<div>form 유효 여부(유효안함) = {{myform.$invalid}}</div>
+		<div>form 유효 여부(유효 함) = {{myform.$valid}}</div>
+	</div>
+
+</body>
+</html>

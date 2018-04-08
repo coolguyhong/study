@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- 모듈을 선언하면 메인 모듈로 어던 모듈을 사용할 것인가를 지정한다 -->
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>A02 Controller</title>
+<script type="text/javascript" 
+src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+	// []는 다른 모듈을 불러올 경우(DI) 개념. 
+	// 컴파일은 []에서 명시한 모듈이 먼저 컴파일이 된다
+	var demo = angular.module('demo', []);
+	demo.factory('invoice', function(){
+		// 기존의 자바 코드
+		var currencies = ['USD', 'EUR', 'CND'];
+		var rate = {'USD': 1, 'EUR': 0.67, 'CND': 6.07};
+		
+		var convertRate = function(amount, outCurr, inCurr){
+			return amount *  rate[outCurr] / rate[inCurr];
+		}
+		return{
+			currencies: currencies,
+			convertRate: convertRate
+		}
+	})
+	
+	var app = angular.module('app', ['demo'])
+	app.controller('main', function($scope, invoice){
+		$scope.qty = 3;
+		$scope.cost = 7;
+		$scope.inCurr = 'EUR';
+		$scope.currencies = invoice.currencies;
+		
+		$scope.total = function(outCurr){
+			//return $scope.qty * $scope.cost * $scope.rate[outCurr] / $scope.rate[$scope.inCurr];
+			return invoice.convertRate($scope.qty * $scope.cost, outCurr, this.inCurr)
+		}
+		$scope.pay = function(){
+			alert('Thank You~');
+		}
+	});
+</script>
+</head>
+
+<!-- 객체화가 필요없이 ng-controller로 지정한 controller
+이름과 하나로 묶어 Template화 된다 -->
+
+<body ng-controller="main">
+
+	<h3>Invoice</h3>
+	
+	<div>
+		Quantity: <input type="number" min="0" ng-model="qty">
+	</div>
+	<div>
+		Cost: <input type="number" min="0" ng-model="cost">
+		<select ng-model="inCurr">
+			<option ng-repeat="c in currencies">{{c}}</option>
+		</select>
+	</div>
+	<div>
+		<b>Total: </b>
+		<!-- 바인딩 태그는 연산자 사용 가능. -->
+		<span ng-repeat="c in currencies">{{total(c) | currency:c }} </span> 
+		<button ng-click="pay()">Pay</button>
+	</div>
+
+</body>
+</html>

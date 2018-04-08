@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>A01 Constant</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+	/*
+	constant => 상수. 사용하는 모듈의 config(초기화)에서 변경 가능
+	value => 변수. constant와 동일하나, 
+			사용하는 모듈의 config(초기화)에서 변경 불가
+	factory => 일반 자바스크립트의 변수나 함수를 받아 사용.
+	service => 일반 자바스크립트 class를 객체화하여 
+			그 객체의 변수나 함수를 바로 사용.
+	provider => factory와 비슷하나, config(초기화)에서 일부를
+			변경 할 수 있음. 
+			모든 서비스는 provider로 컴파일되어 실행된다.
+	*/
+	var demo = angular.module('demo', []);
+	// key, value쌍으로 이루어진 자료
+	demo.constant("name", 'Hong');
+	demo.constant('age', 20);
+	demo.constant('jimea', {
+		name: 'Jimea',
+		age: 24
+	});
+	
+	// value는 constant와 동일하나 config에서 변경 불가
+	demo.value("name1", 'Hong');
+	demo.value('age1', 20);
+	demo.value('jimea1', {
+		name: 'Jimea',
+		age: 24
+	});
+	
+	
+	var app = angular.module('app', ['demo']);
+	// module이 실행되고 처음 초기화 작업등에 필요한 작업이 필요한
+	// 경우 기술. controller가 실행되기 전
+	
+	// constant는 사용하는 module의 config에서 값을 수정 할 수 있다
+	app.config(['jimea',function(jimea){
+		jimea.name = '놀부';
+		jimea.age = 40;
+	}]);
+	
+	app.controller('main', ['$scope','name','age','jimea',
+	                        'name1','age1','jimea1',
+	    function($scope,name,age,jimea, 
+	    		name1,age1,jimea1){
+		//constant 값 참조
+		name = "슬슬 종료를 해야 할 듯 합니다"
+		$scope.name = name;
+		$scope.age = age;
+		$scope.jimea = jimea;
+		
+		$scope.name1 = name; 
+		$scope.age1 = age;
+		$scope.jimea1 = jimea;
+		
+		$scope.changeContant = function(){
+			$scope.name1 = '홍길동'; 
+			$scope.age1 = 300;
+			//$scope.jimea1 = {name:'일지매', age:200};
+			$scope.jimea1.name = '일지매';
+		}
+		
+		// Value값 참조
+		$scope.hongName = name1;
+		$scope.hongAge = age1;
+		$scope.userName = jimea1.name;
+		$scope.userAge = jimea1.age;
+	}]);
+</script>
+</head>
+<body ng-controller="main">
+
+	<div>Constant: <br>
+		{{name}} - {{age}} : {{jimea.name}}<br>
+		{{name1}} - {{age1}} : {{jimea1.name}}<br>
+		<button ng-click="changeContant()">Change</button>
+	</div>
+	
+	<div>Value: <br>
+		{{hongName}} - {{hongAge}} : {{userName}} - {{userAge}}<br>
+	
+	</div>
+</body>
+</html>

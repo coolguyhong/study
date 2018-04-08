@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app', []);
+    app.controller('main', ['$scope', function($scope){
+    	$scope.name = 'HongGilDong';
+    	$scope.changeName = function(n){
+    		$scope.name = n;
+    	}
+    }]);
+</script>
+</head>
+<body>
+
+	<div ng-controller="main">
+        {{name}}<br/>
+        <button ng-click="changeName('홍길동')">Change</button>
+    </div>
+    
+    <hr>
+    
+    <div ng-controller="main">
+        {{name}}<br/>
+        <button ng-click="changeName('임꺽정')">Change</button>
+    </div>
+	
+</body>
+</html>

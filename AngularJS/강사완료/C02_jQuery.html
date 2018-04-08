@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>A10 jLite</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.controller('main', ['$scope', function($scope) {
+		
+		// angular.element()로 객체를 참조하면 리턴타입으로
+		// jQuery 객체를 리턴해 준다
+		var content = angular.element(document.getElementById("content"));
+		console.log(content);
+		content.html('<div>동해물과 <b>백두산</b>이...</div>');
+		
+		angular.element(document.getElementById("btn"))
+		.on('click', function(){
+			alert('Hi ~')
+		});
+	}]);
+</script>
+</head>
+<body ng-controller="main">
+	
+	<div id="content">Conetnt</div>
+	<button id="btn">Alert</button>
+	
+</body>
+</html>

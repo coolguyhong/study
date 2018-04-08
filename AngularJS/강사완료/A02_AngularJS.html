@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- 모듈을 선언하면 메인 모듈로 어던 모듈을 사용할 것인가를 지정한다 -->
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>A02 Controller</title>
+<script type="text/javascript" 
+src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script type="text/javascript">
+	function mainCtrl(){
+		this.qty = 3;
+		this.cost = 7;
+		
+		this.total = function(){
+			return this.qty * this.cost;
+		}
+		this.pay = function(){
+			alert('Thank You~');
+		}
+	}
+	// []는 다른 모듈을 불러올 경우(DI) 개념. 
+	// 컴파일은 []에서 명시한 모듈이 먼저 컴파일이 된다
+	var app = angular.module('app', [])
+	//app.controller('main', mainCtrl);
+	// constroller는 한개 이상 정의 가능
+	app.controller('main', function(){
+		this.qty = 3;
+		this.cost = 7;
+		this.inCurr = 'EUR';
+		this.currencies = ['USD', 'EUR', 'CND'];
+		this.rate = {'USD': 1, 'EUR': 0.67, 'CND': 6.07};
+		
+		this.total = function(outCurr){
+			return this.qty * this.cost * this.rate[outCurr] / this.rate[this.inCurr];
+		}
+		this.pay = function(){
+			alert('Thank You~');
+		}
+	});
+</script>
+</head>
+<!-- 기존 방식은 함수를 as를 이용해 객체화 해서 사용 -->
+
+<body ng-controller="main as mc">
+
+	<h3>Invoice</h3>
+	
+	<div>
+		Quantity: <input type="number" min="0" ng-model="mc.qty">
+	</div>
+	<div>
+		Cost: <input type="number" min="0" ng-model="mc.cost">
+		<select ng-model="mc.inCurr">
+			<option ng-repeat="c in mc.currencies">{{c}}</option>
+		</select>
+	</div>
+	<div>
+		<b>Total: </b>
+		<!-- 바인딩 태그는 연산자 사용 가능. -->
+		<span ng-repeat="c in mc.currencies">{{mc.total(c) | currency:c }} </span> 
+		<button ng-click="mc.pay()">Pay</button>
+	</div>
+
+</body>
+</html>
